@@ -16,8 +16,8 @@ namespace DataAccessLayer.Concrete.EntityFramework
         }
 
         // DBSet ile veritabanı tablolarımı entity modellerime bağlıyorum
-        DbSet<Car> Cars { get; set; }
-        DbSet<Brand> Brands { get; set; }
-        DbSet<Color> Colors { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Color> Colors { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete.EntityFramework;
 using DataAccessLayer.Concrete.InMemory;
 using Entities.Concrete;
@@ -16,38 +17,31 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             //BrandManager brandManager = new BrandManager(new EfBrandDal);
 
-            foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine("Araç Tanımı: " + car.Description + "\n" + "Araç Modeli: " + car.ModelYear + "\n");
-            }
+            GetAllCar(carManager);
+            //GetAllCarDetail(carManager);
+            //Add(carManager);
+            //Update(carManager);
+            //Delete(carManager);
 
-            CarAdd(carManager);
-
-            foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine("Araç Tanımı: " + car.Description + "\n" + "Araç Modeli: " + car.ModelYear + "\n");
-            }
-
-            CarUpdate(carManager);
-
-            foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine("Araç Tanımı: " + car.Description + "\n" + "Araç Modeli: " + car.ModelYear + "\n");
-            }
-
-            CarDelete(carManager);
-
-            foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine("Araç Tanımı: " + car.Description + "\n" + "Araç Modeli: " + car.ModelYear + "\n");
-            }
-
-            GetCarsByBrandId(carManager);
-
-            GetCarsByColorId(carManager);
-
+            //GetCarsByBrandId(carManager);
+            //GetCarsByColorId(carManager);
         }
-        static void CarAdd(CarManager carManager)
+
+        static void GetAllCar(CarManager _carManager)
+        {
+            foreach (var car in _carManager.GetAll())
+            {
+                Console.WriteLine("Araç Tanımı: " + car.Description + "\n" + "Araç Modeli: " + car.ModelYear + "\n");
+            }
+        }
+        static void GetAllCarDetail(CarManager _carManager)
+        {
+            foreach (var car in _carManager.GetAllCarDetails())
+            {
+                Console.WriteLine("Car ID    :" + car.CarId + "\nBrandName :" + car.BrandName + "\nColorName :" + car.ColorName + "\n");
+            }
+        }
+        static void Add(CarManager _carManager)
         {
             int brandId, colorId, modelYear;
             decimal dailyPrice;
@@ -69,22 +63,20 @@ namespace ConsoleUI
             addCar.ModelYear = modelYear;
             addCar.ColorId = colorId;
             addCar.ModelYear = modelYear;
-            addCar.DailyPrice= dailyPrice;
+            addCar.DailyPrice = dailyPrice;
             addCar.Description = description;
 
-            carManager.Add(addCar);
+            _carManager.Add(addCar);
         }
-
-        static void CarDelete(CarManager carManager)
+        static void Delete(CarManager _carManager)
         {
             int id;
             Console.WriteLine("Silinmesini istediğiniz aracın id bilgisini giriniz: \n");
             id = Convert.ToInt32(Console.ReadLine());
 
-            carManager.Delete(id);
+            _carManager.Delete(id);
         }
-
-        static void CarUpdate(CarManager carManager)
+        static void Update(CarManager _carManager)
         {
             int id, brandId, colorId, modelYear;
             decimal dailyPrice;
@@ -108,40 +100,37 @@ namespace ConsoleUI
             updateCar.BrandId = brandId;
             updateCar.ModelYear = modelYear;
             updateCar.ColorId = colorId;
-            updateCar.DailyPrice= dailyPrice;
+            updateCar.DailyPrice = dailyPrice;
             updateCar.ModelYear = modelYear;
             updateCar.Description = description;
 
-            carManager.Update(updateCar);
+            _carManager.Update(updateCar);
         }
-
-        static void GetCarsByColorId(CarManager carManager)
+        static void GetCarsByColorId(CarManager _carManager)
         {
             int id;
             Console.WriteLine("Renge göre araçları listelemek için renk kodu id'sini giriniz : ");
             id = Convert.ToInt32(Console.ReadLine());
 
-            foreach (var car in carManager.GetCarsByColorId(id))
+            foreach (var car in _carManager.GetCarsByColorId(id))
             {
                 Console.WriteLine("Araç Tanımı: " + car.Description + "\n" + "Araç Modeli: " + car.ModelYear + "\n");
             }
 
-            carManager.GetCarsByColorId(id);
+            _carManager.GetCarsByColorId(id);
         }
-
-        static void GetCarsByBrandId(CarManager carManager)
+        static void GetCarsByBrandId(CarManager _carManager)
         {
             int id;
             Console.WriteLine("Markaya göre araçları listelemek için markasının id'sini giriniz : ");
             id = Convert.ToInt32(Console.ReadLine());
 
-            foreach (var car in carManager.GetCarsByBrandId(id))
+            foreach (var car in _carManager.GetCarsByBrandId(id))
             {
                 Console.WriteLine("Araç Tanımı: " + car.Description + "\n" + "Araç Modeli: " + car.ModelYear + "\n");
             }
 
-            carManager.GetCarsByBrandId(id);
+            _carManager.GetCarsByBrandId(id);
         }
-
     }
 }
